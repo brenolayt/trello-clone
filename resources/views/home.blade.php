@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trello Clone | Home</title>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 
 <body class="bg-gray-50 text-gray-800">
@@ -22,11 +23,11 @@
         <!-- LEFT: TEXT -->
         <div>
             <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900">
-                Reúna, organize e resolva suas tarefas<br>de qualquer lugar.
+                Gather, organize and solve all yours tasks<br>from anywhere.
             </h1>
 
             <p class="text-gray-600 mt-6 text-lg">
-                Fuja da bagunça e do caos. Seja mais produtivo com o Trello Clone.
+                Escape from the mess. Be more productive with trallalero.
             </p>
 
             <!-- EMAIL SIGNUP -->
@@ -37,12 +38,12 @@
 
                 <button type="submit"
                     class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg shadow hover:bg-blue-700 text-lg font-medium">
-                    Criar conta – é grátis!
+                    Register your account for free!
                 </button>
             </form>
 
             <p class="text-gray-500 mt-4 text-sm">
-                Ao inserir meu e-mail, declaro conhecer a Política de Privacidade.
+                Inserting your email means that you know our privacy policy.
             </p>
         </div>
 

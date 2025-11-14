@@ -1,4 +1,4 @@
-<div class="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-white to-slate-100 p-6">
+<div class="min-h-screen flex flex-col justify-center items-center bg-linear-to-br from-white to-slate-100 p-6">
 
     <!-- Logo -->
     <div class="mb-6 flex items-center space-x-2">
@@ -13,22 +13,17 @@
         <h2 class="text-2xl font-semibold text-slate-800 mb-6 text-center">
             Create your account
         </h2>
-
-        @if ($errors->any())
-        <div class="mb-4 p-3 bg-red-100 text-red-600 rounded-xl text-sm">
-            {{ $errors->first() }}
-        </div>
-        @endif
+        
         <!-- Register Form (frontend only) -->
         <form action="{{ route('register.submit') }}" method="POST" class="space-y-5">
             @csrf
             <!-- Username -->
             <div>
                 <label class="block text-slate-700 font-medium mb-1">Username</label>
-                <input name="name" type="text"
+                <input name="username" type="text"
                     class="w-full p-3 rounded-xl border border-slate-300 focus:border-blue-500 focus:ring-blue-500 bg-slate-50"
                     placeholder="Choose a username">
-                @error('name')
+                @error('username')
                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
