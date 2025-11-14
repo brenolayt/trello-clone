@@ -14,10 +14,15 @@
             <a href="#" class="text-gray-600 hover:text-gray-900">Plans</a>
             <a href="#" class="text-gray-600 hover:text-gray-900">Resources</a>
             @auth
-            <a href="/login" class="text-gray-700 hover:text-gray-900 font-semibold">Logout</a>
+            <form action="{{ route('logout') }}" method="POST" class="inline h-full w-full">
+                @csrf
+                <button class="text-gray-700 hover:text-gray-900 font-semibold bg-transparent p-0">
+                    Logout
+                </button>
+            </form>
             @else
-            <a href="/login" class="text-gray-700 hover:text-gray-900 font-semibold">Login</a>
-            <a href="/register"
+            <a href="{{ route('login.show') }}" class="text-gray-700 hover:text-gray-900 font-semibold">Login</a>
+            <a href="{{  route('register.show') }}"
                 class="bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700">
                 Get Started Free
             </a>
