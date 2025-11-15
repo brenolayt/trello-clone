@@ -17,12 +17,20 @@
 
             @auth
             <div x-data="{ open: false }" class="relative">
+
                 <!-- Avatar Button -->
                 <button
                     @click="open = !open"
-                    class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center
-               text-lg font-bold uppercase hover:bg-blue-700 transition">
-                    {{ substr(auth()->user()->name, 0, 1) }}
+                    class="w-10 h-10 rounded-full overflow-hidden border border-gray-300 shadow-sm bg-gray-100">
+
+                    @if(auth()->user()->avatar)
+                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
+                        class="w-full h-full object-cover" alt="Avatar">
+                    @else
+                    <div class="w-full h-full bg-blue-600 flex items-center justify-center text-white font-bold">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </div>
+                    @endif
                 </button>
 
                 <!-- Dropdown -->
@@ -31,10 +39,17 @@
                     @click.outside="open = false"
                     x-transition
                     class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg py-2 z-50">
+
                     <!-- Username -->
                     <div class="px-4 py-2 text-gray-700 font-semibold border-b border-gray-100">
                         {{ auth()->user()->name }}
                     </div>
+
+                    <!-- Profile -->
+                    <a href="{{ route('profile.show') }}"
+                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                        Profile
+                    </a>
 
                     <!-- Logout -->
                     <form action="{{ route('logout') }}" method="POST">
@@ -46,6 +61,7 @@
                     </form>
                 </div>
             </div>
+
             @else
             <a href="{{ route('login.show') }}" class="text-gray-700 hover:text-gray-900 font-semibold">Login</a>
 
@@ -75,24 +91,29 @@
 
     </div>
 
-    <!-- MOBILE MENU (dropdown) -->
+    <!-- MOBILE MENU -->
     <div
         x-show="open"
         x-transition
         class="md:hidden px-6 pb-4 space-y-4">
+
         <a href="#" class="block text-gray-600 hover:text-gray-900">Features</a>
         <a href="#" class="block text-gray-600 hover:text-gray-900">Plans</a>
         <a href="#" class="block text-gray-600 hover:text-gray-900">Resources</a>
 
         @auth
+        <a href="{{ route('profile.show') }}"
+            class="block text-gray-700 font-semibold hover:text-gray-900">
+            Profile
+        </a>
+
         <form action="{{ route('logout') }}" method="POST" class="flex items-center">
             @csrf
-            <div>
-                <button class="text-gray-700 hover:text-gray-900 font-semibold leading-none">
-                    Logout
-                </button>
-            </div>
+            <button class="text-gray-700 hover:text-gray-900 font-semibold leading-none">
+                Logout
+            </button>
         </form>
+
         @else
         <a href="{{ route('login.show') }}" class="block text-gray-700 hover:text-gray-900 font-semibold">Login</a>
 

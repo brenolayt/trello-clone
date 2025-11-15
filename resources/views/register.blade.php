@@ -13,7 +13,7 @@
         <h2 class="text-2xl font-semibold text-slate-800 mb-6 text-center">
             Create your account
         </h2>
-        
+
         <!-- Register Form (frontend only) -->
         <form action="{{ route('register.submit') }}" method="POST" class="space-y-5">
             @csrf
@@ -29,6 +29,18 @@
             </div>
 
             <!-- Email -->
+            @isset($email)
+            <div>
+                <label class="block text-slate-700 font-medium mb-1">Email</label>
+                <input name="email" type="text"
+                    value="{{ $email }}"
+                    class="w-full p-3 rounded-xl border border-slate-300 focus:border-blue-500 focus:ring-blue-500 bg-slate-50"
+                    placeholder="Enter your email">
+                @error('email')
+                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            @else
             <div>
                 <label class="block text-slate-700 font-medium mb-1">Email</label>
                 <input name="email" type="text"
@@ -38,6 +50,7 @@
                 <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
+            @endisset
 
             <!-- Password -->
             <div>

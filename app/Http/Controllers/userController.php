@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -44,6 +45,13 @@ class userController extends Controller
         return view("/register");
     }
 
+    public function showRegisterWithEmail(Request $request){
+
+        return view("/register", [
+            'email' => $request->email,
+        ]);
+    }
+
     public function userRegister(Request $request)
     {
         $inputs = $request->validate([
@@ -61,5 +69,29 @@ class userController extends Controller
         ]);
         auth()->login($user);
         return redirect()->route('home');
+    }
+
+    public function userUpdate(Request $request){
+        $valid = $request->validate([
+            'name' => ['required', 'min:3', 'max:15'],
+            'avatar' => ['nullable', 'image', 'max:2048'],
+        ]);
+
+        $user = auth()->user();
+        $user->name = $valid['name'];
+
+        if($request->hasFile('avatar')){
+
+            if($user->avatar){
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $path;
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profile updated successfully!');
     }
 }
