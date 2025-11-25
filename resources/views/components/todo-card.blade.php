@@ -1,3 +1,5 @@
+@props(['text', 'id'])
+
 <div 
     x-data="{
         editing: false,
@@ -36,8 +38,9 @@
         </button>
 
         <!-- DELETE BUTTON (FORM) -->
-        <form method="POST" action="">
+        <form method="POST" action="{{ route('todo.delete-card', [$id]) }}">
             @csrf
+            @method('DELETE')
             <button 
                 type="submit"
                 class="block w-full text-left px-4 py-1 text-red-600 hover:bg-red-50"

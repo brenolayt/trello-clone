@@ -50,22 +50,64 @@
                     <p class="text-gray-500 mt-1">Organize your tasks however you prefer.</p>
                 </div>
 
-                <button
-                    class="bg-blue-600 text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 shadow-sm">
-                    + Create New Board
-                </button>
+                <div x-data="{ open: false, title: '' }">
+
+                    <!-- CREATE BUTTON -->
+                    <button
+                        @click="open = true"
+                        class="bg-blue-600 text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 shadow-sm">
+                        + Create New Board
+                    </button>
+
+                    <!-- POPUP / INPUT -->
+                    <div
+                        x-show="open"
+                        x-transition
+                        class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+
+                            <h2 class="text-xl font-semibold mb-3">New Board</h2>
+
+                            <form method="POST" action="{{ route('todo.create-board') }}">
+                                @csrf
+
+                                <input type="text"
+                                    name="title"
+                                    x-model="title"
+                                    placeholder="Board name…"
+                                    class="w-full border rounded-lg px-3 py-2 focus:ring focus:outline-none"
+                                    required />
+
+                                <div class="flex justify-end gap-3 mt-4">
+                                    <button type="button"
+                                        @click="open = false; title = ''"
+                                        class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">
+                                        Cancel
+                                    </button>
+
+                                    <button type="submit"
+                                        class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+                                        Create
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
             <!-- BOARDS WRAPPER (empty for now, you will fill later) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                <!-- Example board (temporary placeholder) -->
-                <x-todo-board title="boa pergunta">
-                    <x-todo-card text="teste"></x-todo-card>
-                    <x-todo-card text="teste2"></x-todo-card>
-                    <x-todo-card text="teste3"></x-todo-card>
+                @foreach(auth()->user()->userTodos as $todo)
+                <x-todo-board title="{{ $todo->title }}" id="{{ $todo->id }}">
+                    @foreach($todo->cards as $cards)
+                    <x-todo-card text="{{ $cards->text }}" id="{{$cards->id}}"></x-todo-card>
+                    @endforeach
                 </x-todo-board>
-
+                @endforeach
             </div>
 
         </main>

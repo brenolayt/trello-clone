@@ -4,7 +4,7 @@
 
         <!-- Back to Home -->
         <a href="{{ route('home') }}"
-        class="inline-flex items-center mb-6 text-blue-600 hover:text-blue-800 font-medium">
+            class="inline-flex items-center mb-6 text-blue-600 hover:text-blue-800 font-medium">
             <svg xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">

@@ -48,6 +48,10 @@ class User extends Authenticatable
     }
 
     public function userTodos(){
-        $this->hasMany(todo::class, "user_id");
+        return $this->hasMany(todo::class, "user_id");
+    }
+
+    public function userCards(){
+        return $this->hasMany(todoCard::class, "user_id");
     }
 }
