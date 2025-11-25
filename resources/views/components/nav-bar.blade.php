@@ -63,7 +63,7 @@
             </div>
 
             @else
-            <a href="{{ route('login.show') }}" class="text-gray-700 hover:text-gray-900 font-semibold">Login</a>
+            <a href="{{ route('login') }}" class="text-gray-700 hover:text-gray-900 font-semibold">Login</a>
 
             <a href="{{ route('register.show') }}"
                 class="bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700">
@@ -115,7 +115,7 @@
         </form>
 
         @else
-        <a href="{{ route('login.show') }}" class="block text-gray-700 hover:text-gray-900 font-semibold">Login</a>
+        <a href="{{ route('login') }}" class="block text-gray-700 hover:text-gray-900 font-semibold">Login</a>
 
         <a href="{{ route('register.show') }}"
             class="block bg-blue-600 text-white text-center px-4 py-3 rounded-lg shadow hover:bg-blue-700">

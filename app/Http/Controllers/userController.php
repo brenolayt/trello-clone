@@ -34,6 +34,10 @@ class userController extends Controller
         ]);
     }
 
+    public function userProfile(){
+        return view('/profile');
+    }
+
     public function logOut()
     {
         auth()->logout();

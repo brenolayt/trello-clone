@@ -1,3 +1,4 @@
+@props(['title', 'id'])
 <!-- Board component -->
 <div x-data="board()" class="relative bg-gray-100 p-4 rounded-xl w-80 shadow flex flex-col max-h-[80vh]">
 
@@ -23,15 +24,17 @@
                 @click.outside="closeMenu()"
                 x-transition
                 class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-md z-50"
-                style="min-width:10rem;"
-            >
-
-                <button
-                    @click="closeMenu()"  {{-- placeholder for delete --}}
-                    class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
-                >
-                    Delete
-                </button>
+                style="min-width:10rem;">
+                <form method="POST" , action="{{ route("todo.delete-board", [$id]) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button
+                        type="submit"
+                        @click="closeMenu()" {{-- placeholder for delete --}}
+                        class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600">
+                        Delete
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -52,37 +55,82 @@
 
     <!-- ADD CARD BUTTON (restored at bottom) -->
     <div class="mt-4">
-        <button @click="$dispatch('add-card-request')" class="w-full text-left text-gray-600 hover:text-gray-900 text-sm">
-            + Add another card
-        </button>
+        <form method="POST" action="{{ route('todo.create-card', $id) }}">
+            @csrf
+
+            <div x-data="{ addingCard: false }">
+
+                <button
+                    x-show="!addingCard"
+                    @click.prevent="addingCard = true"
+                    class="w-full text-left text-gray-600 hover:text-gray-900 text-sm mt-2">
+                    + Add another card
+                </button>
+
+                <div x-show="addingCard" class="mt-2 space-y-2">
+
+                    <input
+                        name="title"
+                        type="text"
+                        class="w-full p-2 border rounded-lg"
+                        placeholder="Enter card title..."
+                        required>
+
+                    <div class="flex gap-2">
+                        <button
+                            type="submit"
+                            class="bg-blue-600 text-white px-3 py-1 rounded-lg">
+                            Add
+                        </button>
+
+                        <button
+                            type="button"
+                            class="px-3 py-1 bg-gray-200 rounded-lg"
+                            @click="addingCard = false">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
     </div>
+
 </div>
 
 <script>
-function board(){
-    return {
-        menuOpen: false,
-        editing: false,
+    function board() {
+        return {
+            menuOpen: false,
+            editing: false,
 
-        toggleMenu(){
-            this.menuOpen = !this.menuOpen;
-        },
+            toggleMenu() {
+                this.menuOpen = !this.menuOpen;
+            },
 
-        closeMenu(){
-            this.menuOpen = false;
-        },
+            closeMenu() {
+                this.menuOpen = false;
+            },
 
-        enterEditMode(){
-            this.menuOpen = false;
-            this.editing = true;
-            // broadcast to cards
-            window.dispatchEvent(new CustomEvent('board-edit-mode', { detail: { on: true } }));
-        },
+            enterEditMode() {
+                this.menuOpen = false;
+                this.editing = true;
+                // broadcast to cards
+                window.dispatchEvent(new CustomEvent('board-edit-mode', {
+                    detail: {
+                        on: true
+                    }
+                }));
+            },
 
-        leaveEditMode(){
-            this.editing = false;
-            window.dispatchEvent(new CustomEvent('board-edit-mode', { detail: { on: false } }));
+            leaveEditMode() {
+                this.editing = false;
+                window.dispatchEvent(new CustomEvent('board-edit-mode', {
+                    detail: {
+                        on: false
+                    }
+                }));
+            }
         }
     }
-}
 </script>
